@@ -1,16 +1,13 @@
 [project]
 name = "chercher-plugin-pdf"
-version = "0.1.0"
-description = "Chercher plugin for PDF files."
+version = "0.1.1"
+description = "Chercher plugin that adds support for PDF files."
 readme = "README.md"
 authors = [{ name = "dnlzrgz", email = "contact@dnlzrgz.com" }]
 license = "MIT"
 classifiers = []
 requires-python = ">=3.13"
-dependencies = [
- "chercher>=0.1.7",
- "pymupdf>=1.25.5",
-]
+dependencies = ["chercher>=0.1.7", "pymupdf>=1.25.5"]
 
 
 [project.urls]
