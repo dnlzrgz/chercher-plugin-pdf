@@ -1,3 +1,4 @@
+import hashlib
 from pathlib import Path
 from typing import Generator
 import pymupdf
@@ -12,9 +13,18 @@ def ingest(uri: str) -> Generator[Document, None, None]:
     if not path.exists() or not path.is_file() or path.suffix != ".pdf":
         return
 
-    body = ""
-    with pymupdf.open(uri) as doc:
-        for page in doc:
-            body += page.get_text()
+    doc = pymupdf.open(uri)
 
-    yield Document(uri=uri, body=body, metadata={})
+    file_bytes = doc.tobytes(no_new_id=True)
+    digest = hashlib.sha256(file_bytes)
+
+    body = ""
+    for page in doc:
+        body += page.get_text()
+
+    yield Document(
+        uri=uri,
+        body=body,
+        hash=digest.hexdigest(),
+        metadata={},
+    )
