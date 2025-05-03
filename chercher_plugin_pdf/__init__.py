@@ -16,7 +16,7 @@ def normalize_uri(uri: str) -> Path:
     return Path(uri)
 
 
-@hookimpl
+@hookimpl()
 def ingest(uri: str) -> Generator[Document, None, None]:
     path = normalize_uri(uri)
     if not path.exists() or not path.is_file() or path.suffix != ".pdf":
@@ -28,7 +28,7 @@ def ingest(uri: str) -> Generator[Document, None, None]:
             body += page.get_text()
 
     yield Document(
-        uri=uri,
+        uri=path.as_uri(),
         body=body,
         metadata={},
     )
